@@ -1,0 +1,15 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'Notes/style.css' %}">
+<center>
+  <h1>Bienvenue dans mon application de Gestiion de note !</h1>
+  <h2>Voici la liste des actions que vous pouvez effectuer :</h2>
+</center>
+
+<p>Liste des :</p>
+<ul>
+  <li><a href="{% url 'notes:matieres'%}">Matières</a></li>
+  <li><a href="{% url 'notes:eleves'%}">Elèves</a></li>
+</ul>
+
+<!--img src="" alt=""-->

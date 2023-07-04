@@ -1,0 +1,26 @@
+{% extends "foundation/base.html" %}
+
+{% block base_body %}
+<center>
+  <div class="text-center" style="background-color: beige; width: 20rem; margin-top: 4rem; border-radius: 10px;">
+    <h1 class="">Page d'ajout de note</h1>
+    <br />
+    <p>
+      Vous aimeriez ajouter une note pour l'élève
+      <strong style="color: blue">{{el.nom}} </strong>
+      et pour la matière
+      <strong style="color: blue">{{mat.nomDeMat}} :</strong>
+    </p>
+    <p>{% for error in form.errors %} {{ error }} {% endfor%}</p>
+    <form action="{% url 'notes:add_note' el.id_eleve mat.id %}" method="post">
+      {% csrf_token %}
+
+      <div class="">
+        {{ formulaire }}
+        <input class="button" type="submit" value="Valider" />
+        <a class="alert button" href="{% url 'notes:eleve' el.id_eleve %}">Annuler</a>
+      </div>
+    </form>
+  </div>
+</center>
+{% endblock base_body %}

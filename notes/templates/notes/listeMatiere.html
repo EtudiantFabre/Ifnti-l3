@@ -1,0 +1,42 @@
+{% extends "foundation/base.html" %}
+{% block base_body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/js/vendor/jquery.min.js"></script>
+
+<div>
+  <ul class="vertical menu accordion-menu" data-accordion-menu>
+    <li>
+      <a href="#">VOIR TOUS LES UEs</a>
+      <ul class="menu vertical nested">
+        {% for matiere in matieres.all %}
+        <li><a href="{% url 'notes:matiere' matiere.id %}">{{matiere.nomDeMat}}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+  </ul>
+</div>
+<div>
+  <h1 background="blue">LISTE DES MATIÈRES !!!</h1>
+  <br />
+  <table border="1" class="hover">
+    <tr>
+      <td>#ID</td>
+      <td>NOM</td>
+      <td>ENSEIGNANT(ID)</td>
+      <td>ACTIONS</td>
+    </tr>
+    {% for matiere in matieres.all %}
+
+    <tr>
+      <td>{{matiere.id}}</td>
+      <td>{{matiere.nomDeMat}}</td>
+      <td>{{matiere.enseignant.id}}</td>
+      <td>
+        <a href="{% url 'notes:matiere' matiere.id %}">Afficher</a>
+        |
+        <a href="{% url 'notes:noteEleves' matiere.id %}">Afficher les notes de la matière</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock base_body%}

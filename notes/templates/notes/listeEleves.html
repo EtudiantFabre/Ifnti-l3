@@ -1,0 +1,60 @@
+{% extends "foundation/base.html" %}
+
+<style>
+  #flex-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #flex-container>.flex-item {
+    /*flex: auto;*/
+    width: 0rem;
+  }
+
+  #flex-container>.raw-item {
+    /*width: 5rem;*/
+    flex: 900cm;
+  }
+</style>
+{% block base_body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/js/vendor/jquery.min.js"></script>
+
+<div class="flex-container">
+  <div class="flex-item " id="flex">
+    <ul class="vertical menu accordion-menu" data-accordion-menu>
+      <li>
+        <a href="#">VOIR TOUS LES ÉTUDIANTS</a>
+        <ul class="menu vertical nested">
+          {% for eleve in le.all %}
+          <li><a href="{% url 'notes:eleve' eleve.id_eleve %}">{{eleve.nom}} {{eleve.prenom}}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="raw-item">
+    <center>
+      <h1 style="background-color: aqua;">Liste des élèves !!!</h1>
+      <br />
+      <table border="1" class="hover">
+        <tr>
+          <td>#ID</td>
+          <td>NOM</td>
+          <td>PRÉNOM</td>
+          <td>ACTIONS</td>
+        </tr>
+        {% for eleve in le.all %}
+        <tr>
+          <td>{{eleve.id_eleve}}</td>
+          <td>{{eleve.nom}}</td>
+          <td>{{eleve.prenom}}</td>
+          <td><a href="{% url 'notes:eleve' eleve.id_eleve %}">Afficher</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <a href="{% url 'notes:eleves_pdf' %}" class="button">Afficher PDF</a></td>
+    </center>
+  </div>
+</div>
+{% endblock base_body %}

@@ -1,0 +1,314 @@
+{% extends "foundation/base.html" %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'Notes/style.css' %}">
+
+{% block base_body %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/js/vendor/jquery.min.js"></script>
+
+{# Custom CSS #}
+{% block css %}
+<style>
+  body {
+    background-color: #bababd;
+  }
+
+  a {
+    color: #01020f;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
+  }
+
+  a:hover {
+    color: #ee6116;
+    font-size: 2em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+
+  ul,
+  li:hover {
+    background-color: #1462e0;
+  }
+
+  .back-color {
+    /*background-color: #e0dbd8;*/
+    text-align: center;
+  }
+
+  #flex-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #flex-container>.flex-item {
+    /*flex: auto;*/
+    width: 0rem;
+  }
+
+  #flex-container>.raw-item {
+    /*width: 5rem;*/
+    flex: 900cm;
+  }
+
+  #flex-container-column {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5cm;
+  }
+
+  #flex-container-column>.flex-item {
+    flex: auto;
+    width: 0rem;
+    height: 7rem;
+  }
+
+  #flex-container-column>.raw-item {
+    /*width: 5rem;*/
+    flex: auto;
+    width: 0rem;
+    height: 4rem;
+  }
+
+  .first-row {
+    padding: 6rem 0rem 0rem 2rem;
+  }
+</style>
+{% endblock css %}
+
+<div class="top-bar" style="background: linear-gradient(to left, #1462e0, #ee6116); text-align: center;">
+  <div class="top-bar-left">
+    <ul class="dropdown menu" data-dropdown-menu style="background-color: #cd5e22;">
+      <li class="menu-text">IFNTI-NOTE</li>
+      <li><a href="{% url 'notes:eleves'%}" style="color: white;">Liste des étudiants</a></li>
+      <li><a href="{% url 'notes:matieres'%}" style="color: white;">Liste des UEs</a></li>
+      <li><a href="{% url 'notes:create_student'%}" style="color: white;">Créer un Etudiant</a></li>
+    </ul>
+  </div>
+  <div class="top-bar-right">
+    <ul class="menu">
+      <li><input type="search" placeholder="Chercher"></li>
+      <li><button type="button" class="button">Chercher</button></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Menu -->
+<!--ul style="background: linear-gradient(to left, #1462e0, #ee6116); text-align: center;
+height: 5rem; padding: 2rem 0rem 0rem 0rem;" class="menu align-center">
+  <li class="columns small-4 large-4 text-color"><a href="ifnti.com" target="_blank" style="color: white;">IFNTI</a>
+  </li>
+  <li class="columns small-4 large-4"><a href="https://get.foundation/sites/docs/grid.html" style="color: white;"
+      target="_blank">Foundation</a></li>
+  <li class="columns small-4 large-4"><a href="https://www.youtube.com/channel/UC9H0uvq-93Bbf1hJJ5mJa8A"
+      style="color: white;" target="_blank">Fabrice
+      Toyi</a></li>
+</ul-->
+<!-- Menu -->
+
+<br>
+
+<div class="row">
+  <div class="large-12 columns">
+    <h1 style="
+    padding: 150px;
+    text-align: center; 
+    color: white;
+    background: linear-gradient(to left, #1462e0, #ee6116);"><em>Bienvenue sur IFNTI-NOTE</em></h1>
+  </div>
+</div>
+<br />
+
+<div id="flex-container">
+  <div class="flex-item first-row" id="flex">
+    <ul class="dropdown menu" data-dropdown-menu>
+      <li>
+        <a href="{% url 'notes:eleves'%}">Étudiants</a>
+        <ul class="menu">
+          <li>
+            <a href="{% url 'notes:eleves'%}">Liste</a>
+          </li>
+          <ul class="dropdown menu" data-dropdown-menu>
+            <li>
+              <a href="#">Détails</a>
+              <ul class="menu">
+                {% for eleve in eleves.all %}
+                <li>
+                  <a href="{% url 'notes:eleve' eleve.id_eleve %}">{{eleve.nom}} {{eleve.prenom}}</a>
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+          </ul>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <br>
+  <div class="raw-item" id="raw">
+    <div class="row align-center back-color first-row" style="text-align: center;">
+      <div class="columns small-5 large-4">
+        <a href="">
+          <div class="card" style="width: 300px; background-color: #ee6116; border-radius: 10px; color: white;">
+            <div class="card-divider">
+              <h4 style="padding-left: 4px;">Matière(s)</h4>
+            </div>
+            <img title="Cliquer ici 👇️ !!!"
+              src="https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fG1hdGhlbWF0aWNzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Mon image" style="height: 13rem; width: 19rem;">
+            <div class="card-section" style="padding-left: 4px;">
+              <p>En cliquant ici, vous pourez accéder à la liste des matières.</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+
+      <div class="columns small-4 large-4">
+        <a href="">
+          <div class="card" style="width: 300px; background-color: #ee6116; border-radius: 10px;">
+            <div class="card-divider">
+              <h4 style="padding-left: 4px;  color: white;">Élève(s)</h4>
+            </div>
+            <img title="Cliquer ici 👇️ !!!"
+              src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fHN0dWRlbnRzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Mon image" style="height: 13rem; width: 19rem;">
+            <div class="card-section" style="padding-left: 4px;">
+              <p style=" color: white;">En cliquant ici, vous pourez accéder à la liste des étudiants.</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="columns small-4 large-4">
+        <a href="{% url 'notes:niveaux'%}">
+          <div class="card" style="width: 300px; background-color: #ee6116; border-radius: 10px;">
+            <div class="card-divider">
+              <h4 style="padding-left: 4px; color: white;">Niveau(x)</h4>
+            </div>
+            <img title="Cliquer ici 👇️ !!!"
+              src="https://images.unsplash.com/photo-1527699394565-4be926d174de?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGxldmVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Mon image" style="height: 13rem; width: 19rem;">
+            <div class="card-section" style="padding-left: 4px;">
+              <p style="color: white;">En cliquant ici, vous pourez accéder à la liste des niveaux.</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="flex-container-column" class="first-row" style="background-color: #bababd;">
+  <ul class="dropdown menu flex-item" data-dropdown-menu>
+    <li>
+      <a href="#">UEs</a>
+      <ul class="menu">
+        <li><a href="{% url 'notes:matieres'%}">Liste</a></li>
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li>
+            <a href="#">Détails</a>
+            <ul class="menu">
+              {% for matiere in matieres.all %}
+              <li>
+                <p>
+                  <a href="{% url 'notes:matiere' matiere.id %}">{{matiere.nomDeMat}}</a>|
+                  <a href="{% url 'notes:noteEleves' matiere.id %}">Notes de {{matiere.nomDeMat}}</a>
+                </p>
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </li>
+  </ul>
+
+  <ul class="dropdown menu raw-item" data-dropdown-menu>
+    <li>
+      <a href="#">Niveaux</a>
+      <ul class="menu">
+        {% for niv in niveaux.all %}
+        <li>
+          <a href="{% url 'notes:niveau' niv.id %}">{{niv.nom}}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="row small-up-2 medium-up-3 large-up-4">
+  <div class="column column-block bg-dark">
+    <img
+      src="https://images.unsplash.com/photo-1675186259567-5fb2677f4844?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60"
+      alt="My image">
+    <span>First</span>
+  </div>
+  <div class="column column-block">
+    <img
+      src="https://images.unsplash.com/photo-1675019335923-05c6ddce8546?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyOXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+      class="thumbnail" alt="">
+    <span>Second</span>
+  </div>
+  <div class="column column-block">
+    <img
+      src="https://images.unsplash.com/photo-1675205198503-eb65eb901a27?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+      class="thumbnail" alt="">
+    <span>Third</span>
+  </div>
+  <div class="column column-block">
+    <img
+      src="https://images.unsplash.com/photo-1675237293244-1c2ef3171a7e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0N3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+      class="thumbnail" alt="">
+    <span>Quatre</span>
+  </div>
+  <div class="column column-block">
+    <img
+      src="https://images.unsplash.com/photo-1675218719517-b20e5bade63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1Nnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+      class="thumbnail" alt="">
+    <span>Cinq</span>
+  </div>
+  <div class="column column-block">
+    <img
+      src="https://images.unsplash.com/photo-1675152795586-9ae368a13f35?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+      class="thumbnail" alt="">
+    <span>Six</span>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="columns small-2" style="background-color: #01020f; color: aliceblue;">Texte 1</div>
+  <div class="columns small-3" style="background-color: rgb(165, 61, 61); color: aliceblue;">Grid1</div>
+  <div class="columns small-2" style="background-color: aqua; color: aliceblue;">Grid2</div>
+  <div class="columns small-2" style="background-color: rgb(0, 42, 255); color: aliceblue;">Grid3</div>
+  <div class="columns small-3" style="background-color: rgb(17, 255, 0); color: aliceblue;">Grid4</div>
+</div>
+
+
+
+<!--div class="row align-center" style="text-align: center; padding: 4rem;">
+  <div class="columns small-5 large-4">
+    <a href="{% url 'notes:create_student'%}">
+      <div class="card" style="width: 300px; background-color: #ee6116; border-radius: 10px; color: white;">
+        <div class="card-divider">
+          <h4 style="padding-left: 4px;">Élève</h4>
+        </div>
+        <img title="Cliquer ici 👇️ !!!"
+          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c3R1ZGVudHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+          alt="Mon image" style="height: 13rem; width: 19rem;">
+        <div class="card-section" style="padding-left: 4px;">
+          <p>En cliquant ici, vous pourez ajouter un élève.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div-->
+
+<footer style="height: 5rem; background: linear-gradient(to left, #1462e0, #ee6116); text-align: center;">
+  <p style="padding-top: 2.5rem;">© 2022 Fabrice Toyi : À étudier à IFNTI</p>
+</footer>
+
+{% endblock base_body%}
